@@ -2,18 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api_rest.Model
+namespace api_rest.Data.VO
 {
-    [Table("person")]
-    public class Person : BaseEntity
+    public class PersonVO 
     {
-        [Column("first_name")]
+        public long Id { get; set; }
         public string FirstName { get; set; }
-        [Column("last_name")]
         public string LastName { get; set; }
-        [Column("address")]
         public string Adress { get; set; }
-        [Column("gender")]
         public string Gender { get; set; }
     }
 }

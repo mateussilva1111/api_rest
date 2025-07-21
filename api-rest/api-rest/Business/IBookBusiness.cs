@@ -1,17 +1,18 @@
-﻿using api_rest.Model;
+﻿using api_rest.Data.VO;
+using api_rest.Model;
 
 namespace api_rest.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
+        BookVO Create(BookVO book);
 
-        Book Update(Book book);
+        BookVO Update(BookVO book);
 
         void Delete(long id);
 
-        Book FindById(int id);
+        BookVO FindById(int id);
 
-        List<Book> FindAll();
+        List<BookVO> FindAll();
     }
 }

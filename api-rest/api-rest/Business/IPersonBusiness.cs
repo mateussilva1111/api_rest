@@ -1,17 +1,18 @@
-﻿using api_rest.Model;
+﻿using api_rest.Data.VO;
+using api_rest.Model;
 
 namespace api_rest.Business
 {
     public interface IPersonBusiness
     {
-        Person Create(Person person);
+        PersonVO Create(PersonVO person);
 
-        Person Update(Person person);
+        PersonVO Update(PersonVO person);
 
         void Delete(long id);
 
-        Person FindById(int id);
+        PersonVO FindById(int id);
 
-        List<Person> FindAll ();
+        List<PersonVO> FindAll ();
     }
 }

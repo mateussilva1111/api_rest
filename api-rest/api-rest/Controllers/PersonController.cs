@@ -2,6 +2,7 @@ using api_rest.Model;
 using api_rest.Business;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using api_rest.Data.VO;
 
 namespace api_rest.Controllers
 {
@@ -34,13 +35,13 @@ namespace api_rest.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Person person)
+        public IActionResult Post([FromBody]PersonVO person)
         {
             return Ok(_personBusiness.Create(person));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             return Ok(_personBusiness.Update(person));
         }

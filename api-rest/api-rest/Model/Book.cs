@@ -1,15 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using api_rest.Model.Context.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api_rest.Model
 {
     [Table("books")]
-    public class Book
+    public class Book : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
-
         [Column("author")]
-        public string author { get; set; }
+        public string Author { get; set; }
 
         [Column("launch_date")]
         public DateTime LaunchDate { get; set; }

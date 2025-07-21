@@ -2,9 +2,8 @@ using api_rest.Business;
 using api_rest.Business.Implementations;
 using api_rest.Model.Context;
 using api_rest.Repository;
-using api_rest.Repository.Implementations;
+using api_rest.Repository.Generic;
 using EvolveDb;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Serilog;
@@ -30,7 +29,10 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddApiVersioning();
 
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+
+builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
 

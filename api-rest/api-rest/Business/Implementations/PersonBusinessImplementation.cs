@@ -1,22 +1,27 @@
-﻿using api_rest.Model;
-using api_rest.Model.Context;
+﻿using api_rest.Data.Coverter.Implementation;
+using api_rest.Data.VO;
+using api_rest.Model;
 using api_rest.Repository;
 
 namespace api_rest.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IRepository<Person> _personRepository;
+        private readonly PersonConverter _converter;
 
-        public PersonBusinessImplementation(IPersonRepository personRepository)
+        public PersonBusinessImplementation(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
+            _converter = new PersonConverter();
         }
-        public Person Create(Person person)
+        public PersonVO Create(PersonVO person)
         {
             try
             {
-                _personRepository.Create(person);
+                var personEntity = _converter.Parse(person);
+                personEntity = _personRepository.Create(personEntity);
+                return _converter.Parse(personEntity);
             }
             catch (Exception)
             {
@@ -27,24 +32,26 @@ namespace api_rest.Business.Implementations
 
         public void Delete(long id)
         {
-
             _personRepository.Delete(id);
 
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _personRepository.FindAll();
+            return _converter.Parse(_personRepository.FindAll());
         }
 
-        public Person FindById(int id)
+        public PersonVO FindById(int id)
         {
-            return _personRepository.FindById(id);
+            return _converter.Parse(_personRepository.FindById(id));
         }
 
-        public Person Update(Person person)
+        public PersonVO Update(PersonVO person)
         {
-            return _personRepository.Update(person);
+
+            var personEntity = _converter.Parse(person);
+            personEntity = _personRepository.Update(personEntity);
+            return _converter.Parse(personEntity);
         }
     }
 }
