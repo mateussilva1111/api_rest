@@ -1,13 +1,13 @@
 ﻿using api_rest.Model;
 using api_rest.Model.Context;
 
-namespace api_rest.Service.Implementations
+namespace api_rest.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private MysqlContext _context;
 
-        public PersonServiceImplementation(MysqlContext context)
+        public PersonRepositoryImplementation(MysqlContext context)
         {
             _context = context;
         }
@@ -27,12 +27,12 @@ namespace api_rest.Service.Implementations
 
         public void Delete(long id)
         {
-            var result = _context.Person.SingleOrDefault(p => p.Id.Equals(id));
+            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
             if (result != null)
             {
                 try
                 {
-                    _context.Person.Remove(result);
+                    _context.Persons.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -44,18 +44,18 @@ namespace api_rest.Service.Implementations
 
         public List<Person> FindAll()
         {
-           return _context.Person.ToList();
+           return _context.Persons.ToList();
         }
 
-        public Person FindById(int id)
+        public Person FindById(long id)
         {
-            return _context.Person.SingleOrDefault(p => p.Id.Equals(id));
+            return _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
         }
 
         public Person Update(Person person)
         {
             if (!Exists(person.Id))return new Person(); 
-            var result = _context.Person.SingleOrDefault(p => p.Id.Equals(person.Id));
+            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(person.Id));
             if (result != null)
             {
                 try
@@ -71,9 +71,9 @@ namespace api_rest.Service.Implementations
             return person;
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
-            return _context.Person.Any(p => p.Id.Equals(id));
+            return _context.Persons.Any(p => p.Id.Equals(id));
         }
     }
 }

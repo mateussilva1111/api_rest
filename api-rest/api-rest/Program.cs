@@ -1,11 +1,18 @@
+using api_rest.Business;
+using api_rest.Business.Implementations;
 using api_rest.Model.Context;
-using api_rest.Service;
-using api_rest.Service.Implementations;
+using api_rest.Repository;
+using api_rest.Repository.Implementations;
+using EvolveDb;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 
 builder.Services.AddControllers();
 
@@ -14,7 +21,16 @@ var connectionString = builder.Configuration.GetConnectionString("MySQLConnectio
 // Registra o contexto no container de serviços
 builder.Services.AddDbContext<MysqlContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
+
+if (builder.Environment.IsDevelopment())
+{
+    MigrateDatabase(connectionString);
+}
+
+builder.Services.AddApiVersioning();
+
+builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
 var app = builder.Build();
 
@@ -27,3 +43,22 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void MigrateDatabase(string connection)
+{
+    try
+    {
+        var evolveConnection = new MySqlConnection(connection);
+        var evolve = new Evolve(evolveConnection, Log.Information)
+        {
+            Locations = new List<string> { "db/migrations", "db/dataset" },
+            IsEraseDisabled = true,
+        };
+        evolve.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Log.Error("erro de conexão", ex);
+        throw;
+    }
+}

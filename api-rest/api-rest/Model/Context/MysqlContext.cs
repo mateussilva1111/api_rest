@@ -19,6 +19,7 @@ namespace api_rest.Model.Context
 
         // Essa propriedade representa uma "tabela" no banco de dados.
         // O Entity Framework vai mapear a entidade Person para a tabela correspondente no MySQL.
-        public DbSet<Person> Person { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using api_rest.Model;
 
-namespace api_rest.Service
+namespace api_rest.Business
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create(Person person);
 
