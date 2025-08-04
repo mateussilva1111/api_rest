@@ -5,9 +5,9 @@ using api_rest.Repository;
 using api_rest.Repository.Generic;
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using MySqlConnector;
 using Serilog;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,6 +25,15 @@ if (builder.Environment.IsDevelopment())
 {
     MigrateDatabase(connectionString);
 }
+
+builder.Services.AddMvc(options =>
+{
+    options.RespectBrowserAcceptHeader = true;
+
+    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+    options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+})
+.AddXmlSerializerFormatters();
 
 builder.Services.AddApiVersioning();
 
