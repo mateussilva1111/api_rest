@@ -25,7 +25,7 @@ if (builder.Environment.IsDevelopment())
 {
     MigrateDatabase(connectionString);
 }
-
+//content negociation
 builder.Services.AddMvc(options =>
 {
     options.RespectBrowserAcceptHeader = true;
