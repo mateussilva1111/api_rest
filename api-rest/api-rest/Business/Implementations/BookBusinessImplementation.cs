@@ -2,7 +2,6 @@
 using api_rest.Data.VO;
 using api_rest.Model;
 using api_rest.Repository;
-using System;
 
 namespace api_rest.Business.Implementations
 {

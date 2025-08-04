@@ -1,10 +1,8 @@
-﻿using api_rest.Model.Context.Base;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
 
 namespace api_rest.Data.VO
 {
-    public class PersonVO 
+    public class PersonVO
     {
         public long Id { get; set; }
         public string FirstName { get; set; }
